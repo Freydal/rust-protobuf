@@ -20,6 +20,8 @@ pub struct Customize {
     pub serde_derive: Option<bool>,
     /// When `serde_derive` is set, serde annotations will be guarded with `#[cfg(cfg, ...)]`.
     pub serde_derive_cfg: Option<String>,
+    /// Enable derive(default) on fields
+    pub serde_derive_default: Option<bool>,
     /// Enable lite runtime
     pub lite_runtime: Option<bool>,
     /// Used internally to generate protos bundled in protobuf crate
@@ -132,6 +134,7 @@ pub fn customize_from_rustproto_for_message(source: &MessageOptions) -> Customiz
     let carllerche_bytes_for_bytes = rustproto::exts::carllerche_bytes_for_bytes.get(source);
     let carllerche_bytes_for_string = rustproto::exts::carllerche_bytes_for_string.get(source);
     let serde_derive = rustproto::exts::serde_derive.get(source);
+    let serde_derive_default = rustproto::exts::serde_derive.get(source);
     let serde_derive_cfg = rustproto::exts::serde_derive_cfg.get(source);
     let lite_runtime = None;
     let inside_protobuf = None;
@@ -143,6 +146,7 @@ pub fn customize_from_rustproto_for_message(source: &MessageOptions) -> Customiz
         carllerche_bytes_for_string,
         serde_derive,
         serde_derive_cfg,
+        serde_derive_default,
         lite_runtime,
         inside_protobuf,
         _future_options: (),
@@ -157,6 +161,7 @@ pub fn customize_from_rustproto_for_field(source: &FieldOptions) -> Customize {
     let carllerche_bytes_for_string =
         rustproto::exts::carllerche_bytes_for_string_field.get(source);
     let serde_derive = None;
+    let serde_derive_default = None;
     let serde_derive_cfg = None;
     let lite_runtime = None;
     let inside_protobuf = None;
@@ -168,6 +173,7 @@ pub fn customize_from_rustproto_for_field(source: &FieldOptions) -> Customize {
         carllerche_bytes_for_string,
         serde_derive,
         serde_derive_cfg,
+        serde_derive_default,
         lite_runtime,
         inside_protobuf,
         _future_options: (),
@@ -181,6 +187,7 @@ pub fn customize_from_rustproto_for_file(source: &FileOptions) -> Customize {
     let carllerche_bytes_for_bytes = rustproto::exts::carllerche_bytes_for_bytes_all.get(source);
     let carllerche_bytes_for_string = rustproto::exts::carllerche_bytes_for_string_all.get(source);
     let serde_derive = rustproto::exts::serde_derive_all.get(source);
+    let serde_derive_default = rustproto::exts::serde_derive_all.get(source);
     let serde_derive_cfg = rustproto::exts::serde_derive_cfg_all.get(source);
     let lite_runtime = rustproto::exts::lite_runtime_all.get(source);
     let inside_protobuf = None;
@@ -192,6 +199,7 @@ pub fn customize_from_rustproto_for_file(source: &FileOptions) -> Customize {
         carllerche_bytes_for_string,
         serde_derive,
         serde_derive_cfg,
+        serde_derive_default,
         lite_runtime,
         inside_protobuf,
         _future_options: (),

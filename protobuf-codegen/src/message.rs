@@ -524,6 +524,7 @@ impl<'a> MessageGen<'a> {
                                 FieldKind::Oneof(..) => unreachable!(),
                             }
                         };
+                        serde::write_serde_default(w, &self.customize);
                         w.field_decl_vis(
                             vis,
                             &field.rust_name.get(),
